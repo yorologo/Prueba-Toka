@@ -1,48 +1,78 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="es">
+  <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - prueba_toka</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- CSS -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">prueba_toka</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+
+    <title>@ViewData["Title"] - prueba_toka</title>
+  </head>
+
+  <body class="text-center bg-light">
+    <div class="d-flex w-100 h-100 mx-auto flex-column">
+      <header class="mb-auto">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+          <a class="mr-4" asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="~/images/logo.svg" style="width: 8rem" />
+          </a>
+          <button
+            class="navbar-toggler navbar-light border border-white"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbar"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="navbar-collapse collapse" id="navbar">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a
+                  href="/login"
+                  class="nav-link active"
+                  role="button"
+                  aria-pressed="true"
+                  >Login</a
+                >
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/register"
+                  class="nav-link active"
+                  role="button"
+                  aria-pressed="true"
+                  >Registrarse</a
+                >
+              </li>
+            </ul>
+          </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+      </header>
+
+      <main role="main" class="inner container-sm px-4 py-3">
+        @RenderBody()
+      </main>
+
+      <footer class="bg-dark text-white p-3 mt-auto">
+        <div class="inner">
+          Created by
+          <a href="https://github.com/yorologo" class="text-white"
+            ><b>Yorologo</b></a
+          >
+        </div>
+      </footer>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2021 - prueba_toka - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+    <!-- JavaScript -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
+  </body>
 </html>
