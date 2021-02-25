@@ -21,41 +21,77 @@ namespace prueba_toka.Controllers
             _context = context;
         }
 
-        // POST: Question/CreateQuestion
-        [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<int>> CreateQuestion([Bind("Name,Email,Password")] Question question)
+        // Get: Question/Question
+        public IActionResult Question()
         {
-
-            question.IdUser = HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+            return View();
+        }
+        // POST: Question/Question
+        [HttpPost]
+        public async Task<IActionResult> Question([Bind("Id,Name,Email,Password")] Question question)
+        {
+            var IdUser = HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Sid)
                    .Select(c => c.Value).SingleOrDefault();
 
-            if (ModelState.IsValid)
+            if (IdUser == null)
             {
-                _context.Add(question);
-                var IdQuestion = await _context.SaveChangesAsync();
-                return IdQuestion;
+                return Redirect("Home/Login");
             }
 
-            return BadRequest();
+            if (question.Id == 0)
+            {
+                if (ModelState.IsValid)
+                {
+                    _context.Add(question);
+                    var IdQuestion = await _context.SaveChangesAsync();
+
+                    return Redirect("/Question/Question/" + IdQuestion);
+                }
+                return View(question);
+            }
+            else
+            {
+                var findQuestion = await _context.Questions.FindAsync(question.Id);
+                if (findQuestion != null)
+                {
+                    if (findQuestion.IdUser == IdUser)
+                    {
+                        findQuestion.Tittle = question.Tittle;
+                        findQuestion.Body = question.Body;
+                        _context.SaveChanges();
+
+                        return Redirect("/Question/Question/" + findQuestion.Id);
+                    }
+                }
+            }
+
+            return NotFound();
         }
-        // POST: Question/AnswerQuestion
-        [HttpPost]
-        public IActionResult QuestionQuestion()
+        // GET: Question/Ask/{id}
+        public async Task<IActionResult> Ask(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var question = await _context.Questions.FindAsync(id);
+
+            return View(question);
         }
-        // POST: Question/EditQuestion
-        [HttpPost]
-        public IActionResult EditQuestion()
+        // GET: Question/DeleteQuestion/{questionId}
+        public async Task<IActionResult> DeleteQuestion(string id)
         {
-            return View();
-        }
-        // GET: Question/DeleteQuestion/{questionId}/{answerId}
-        public IActionResult DeleteQuestion()
-        {
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var question = await _context.Questions.FindAsync(id);
+            _context.Questions.Remove(question);
+            await _context.SaveChangesAsync();
+
+            return Redirect("/");
         }
     }
 }

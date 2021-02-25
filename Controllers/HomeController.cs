@@ -34,11 +34,6 @@ namespace prueba_toka.Controllers
         {
             return View();
         }
-        // GET: Home/Question/{id}
-        public IActionResult Question()
-        {    
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

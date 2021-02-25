@@ -40,9 +40,15 @@ namespace prueba_toka
                 options.LogoutPath = "/home/logout";
             });
 
+            // services.AddDbContext<BlogContext>(
+            //     options => options.UseInMemoryDatabase(databaseName: "testDB")
+            // );
+
+            string connectionString = ConfigurationExtensions.GetConnectionString(this.Configuration, "DefaultConnectionString");
+
             services.AddDbContext<BlogContext>(
-                options => options.UseInMemoryDatabase(databaseName: "testDB")
-            );
+                    options => options.UseSqlServer(connectionString)
+                );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
