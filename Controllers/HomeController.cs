@@ -11,19 +11,29 @@ namespace prueba_toka.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
-
+        // GET: Home/Index
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult Privacy()
+        // GET: Home/Register
+        public IActionResult Register()
+        {
+            return View();
+        }
+        // GET: Home/Login
+        public IActionResult Login()
+        {
+            return View();
+        }
+        // GET: Home/Ask
+        public IActionResult Ask()
+        {
+            return View();
+        }
+        // GET: Home/Question/{id}
+        public IActionResult Question()
         {
             return View();
         }
@@ -33,5 +43,6 @@ namespace prueba_toka.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
     }
 }
