@@ -18,7 +18,6 @@ namespace prueba_toka
 {
     public class Startup
     {
-        private IWebHostEnvironment _environment;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -62,10 +61,10 @@ namespace prueba_toka
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseRouting();
+
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {

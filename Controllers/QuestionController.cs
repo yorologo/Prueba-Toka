@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using prueba_toka.Models;
 using Prueba_Toka.DAL;
@@ -20,9 +23,22 @@ namespace prueba_toka.Controllers
 
         // POST: Question/CreateQuestion
         [HttpPost]
-        public IActionResult CreateQuestion()
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<int>> CreateQuestion([Bind("Name,Email,Password")] Question question)
         {
-            return View();
+
+            question.IdUser = HttpContext.User.Claims.Where(c => c.Type == ClaimTypes.Sid)
+                   .Select(c => c.Value).SingleOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                _context.Add(question);
+                var IdQuestion = await _context.SaveChangesAsync();
+                return IdQuestion;
+            }
+
+            return BadRequest();
         }
         // POST: Question/AnswerQuestion
         [HttpPost]
