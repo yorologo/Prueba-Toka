@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +18,7 @@ namespace prueba_toka
 {
     public class Startup
     {
+        private IWebHostEnvironment _environment;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -26,6 +30,16 @@ namespace prueba_toka
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+            {
+                options.LoginPath = "/home/login";
+                options.LogoutPath = "/home/logout";
+            });
 
             services.AddDbContext<BlogContext>(
                 options => options.UseInMemoryDatabase(databaseName: "testDB")
@@ -48,9 +62,10 @@ namespace prueba_toka
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {

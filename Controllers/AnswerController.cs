@@ -6,17 +6,27 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using prueba_toka.Models;
+using Prueba_Toka.DAL;
 
 namespace prueba_toka.Controllers
 {
     public class AnswerController : Controller
     {
+        private readonly BlogContext _context;
+        public AnswerController(BlogContext context)
+        {
+            _context = context;
+        }
+        
         // POST: Answer/CreateAnswer
+        [HttpPost]
         public IActionResult CreateAnswer()
         {
             return View();
         }
+
         // POST: Answer/EditAnswer
+        [HttpPost]
         public IActionResult EditAnswer()
         {
             return View();

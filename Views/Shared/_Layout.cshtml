@@ -22,6 +22,21 @@
           <a class="mr-4" asp-area="" asp-controller="Home" asp-action="Index">
             <img src="~/images/logo.svg" style="width: 8rem" />
           </a>
+
+          @if(@User.Identity.IsAuthenticated)
+          {
+
+          <button class="btn nav-link dropdown-toggle text-white ml-auto" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">Hola <b>@User.Identity.Name</b></button>
+          <div class="dropdown-menu dropdown-menu-right px-2" aria-labelledby="navbarDropdownMenuLink">
+              <a href="/Home/Question" class="btn btn-light btn-block" role="button" aria-pressed="true">Preguntar</a>
+              <div class="dropdown-divider"></div>
+              <a href="/User/Logout" class="btn btn-danger btn-block" role="button" aria-pressed="true">Salir</a>
+          </div>
+
+          }
+          else{
+
           <button
             class="navbar-toggler navbar-light border border-white"
             type="button"
@@ -52,6 +67,8 @@
               </li>
             </ul>
           </div>
+
+          }
         </nav>
       </header>
 

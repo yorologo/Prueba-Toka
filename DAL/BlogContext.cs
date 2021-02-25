@@ -6,7 +6,7 @@ using prueba_toka.Models;
 
 namespace Prueba_Toka.DAL
 {
-    public class BlogContext: DbContext
+    public class BlogContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Question> Questions { get; set; }
